@@ -22,7 +22,7 @@ function saveData(data) {
 }
 
 // Danh sách ID Admin (Thay ID Discord thật của ní vào đây để nhận quyền admin)
-const ADMIN_IDS = ["123456789012345678"]; 
+const ADMIN_IDS = ["1464407506397823061"]; 
 
 client.once('ready', async () => {
     console.log(`Bot đã online: ${client.user.tag}`);

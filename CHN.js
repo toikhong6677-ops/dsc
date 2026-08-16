@@ -33,7 +33,39 @@ async function bypassLink(shortUrl) {
     });
 }
 
-// 3. Hàm Obfuscate Luau (VM Virtualization với loadstring = function(a, b, c))
+// 3. Hàm Obfuscate Luau (VM Virtualization chuẩn Roblox)
+function obfuscateLuau(sourceCode) {
+    if (typeof sourceCode !== 'string' || !sourceCode.length) return '';
+
+    const key = Math.floor(Math.random() * 200) + 10;
+    const bytes = [];
+    
+    for (let i = 0; i < sourceCode.length; i++) {
+        bytes.push((sourceCode.charCodeAt(i) + key) % 256);
+    }
+
+    return `-- [OBFUSCATED BY CHN ENGINE & TOIKHONG6677]
+local _k = ${key}
+local _d = {${bytes.join(',')}}
+local t = {}
+for i = 1, #_d do
+    t[i] = string.char((_d[i] - _k) % 256)
+end
+local code = table.concat(t)
+local real_load = (getgenv and getgenv().loadstring) or loadstring
+if real_load then
+    local success, func = pcall(real_load, code)
+    if success and type(func) == "function" then
+        task.spawn(func)
+    end
+end`;
+}
+
+module.exports = {
+    downloadFile,
+    bypassLink,
+    obfuscateLuau
+};
 function obfuscateLuau(sourceCode) {
     if (typeof sourceCode !== 'string' || !sourceCode.length) return '';
 
